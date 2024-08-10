@@ -14,4 +14,16 @@ public class CameraMover : MonoBehaviour
         newCameraPosition = player.transform.position + coursorPosition*grapplingHookWeight;
         transform.position = new Vector3(newCameraPosition.x, newCameraPosition.y, transform.position.z);
     }
+
+    IEnumerator Shaking(float duration, AnimationCurve curve){
+        float startTime = Time.time;
+        while(Time.time - startTime <= duration){
+            float power = curve.Evaluate((Time.time - startTime)/duration);
+            transform.position += Random.insideUnitSphere*power;
+            yield return null;
+        }
+    }
+    public void ScreenShake(float duration, AnimationCurve curve){
+        StartCoroutine(Shaking(duration, curve));
+    }
 }

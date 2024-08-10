@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public bool pressed;
+    public GameObject Door;
+    public Sprite pressedButton;
+    public Sprite unpressedButton;
+    private SpriteRenderer spriteRenderer;
+
+    private void Start() {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCollisionStay(Collision other)
     {
-        
+        pressed = true;
+        spriteRenderer.sprite = pressedButton;
+
     }
+    void OnCollisionExit(Collision other)
+    {
+        pressed = false;
+        spriteRenderer.sprite = unpressedButton;
+    }
+    
 }
