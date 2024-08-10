@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -43,11 +39,24 @@ public class Player : MonoBehaviour
     public GameObject detachEffect;
     public GameObject landingEffect;
     public GameObject gliderEffect;
+    public Vector2 legMovementMinMax = Vector2.one * 45;
+    public float legMovementSpeed = 1f;
+    public float rightLegMovementDir = 1f;
+    private float rightLegZ;
+    public float armMovementSpeed = 10f;
+    public float armMovementDistance = 1f;
+    public float armMovementProgress = 0f;
+    public Transform rightArmLayPosition;
     
     private float _scaleMult = 1f;
     private AudioSource audioSource;
     private bool wasntOnGround;
     private float defGravityScale;
+    public AnimationCurve landingScreenShake;
+    public AnimationCurve detachScreenShake;
+    public float screenShakeDuration = 0.2f;
+    private CameraMover _cameraMover;
+    
     
     private void Start()
     {
@@ -55,6 +64,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         defGravityScale = rb.gravityScale;
         gliderEffect.SetActive(false);
+        _cameraMover = Camera.main.GetComponent<CameraMover>();
     }
     
     private void Update()
@@ -67,6 +77,7 @@ public class Player : MonoBehaviour
         transform.localScale = hasRightLeg ? new Vector3(_scaleMult, 1, 1) : new Vector3(1, _scaleMult, 1); 
         var speed = hasLeftLeg ? speed2Legs : hasRightLeg ? speed1Leg : hasRightArm ? speedNoLegs : 0f;
         _currentHorizontalSpeed = horizontalInput * speed;
+        
         if ( Input.GetButtonDown("Jump"))
         {
             _startJump = true;
@@ -105,6 +116,47 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4) && hasTorso)
         {
             DetachTorso();
+        }
+
+        if (hasRightLeg)
+        {
+            if (Mathf.Abs(_currentHorizontalSpeed) > 0.01f && _isGrounded)
+            {
+                rightLegZ += _currentHorizontalSpeed * rightLegMovementDir * legMovementSpeed * Time.deltaTime;
+            }
+            else
+            {
+                if (Mathf.Abs(rightLegZ) > Time.deltaTime * legMovementSpeed)
+                {
+                    rightLegZ += rightLegZ > 0 ? -legMovementSpeed * Time.deltaTime : legMovementSpeed * Time.deltaTime;
+                }
+            }
+            if (rightLegZ > legMovementMinMax.y || rightLegZ < legMovementMinMax.x)
+            {
+                rightLegMovementDir *= -1;
+                rightLegZ = Mathf.Clamp(rightLegZ, legMovementMinMax.x, legMovementMinMax.y);
+            }
+            rightLeg.transform.eulerAngles = new Vector3(0f, 0f, rightLegZ);
+            if (hasLeftLeg)
+            {
+                leftLeg.transform.eulerAngles = new Vector3(0f, 0f, -rightLegZ);
+            }
+        }
+        else if (hasRightArm)
+        {
+            rightArm.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
+            armMovementProgress += _currentHorizontalSpeed * armMovementSpeed * Time.deltaTime;
+            if (Mathf.Abs(armMovementProgress) >= armMovementDistance)
+            {
+                armMovementSpeed *= -1;
+                armMovementProgress = Mathf.Clamp(armMovementProgress, -armMovementDistance, armMovementDistance);
+            }
+            rightArm.transform.localPosition = rightArmLayPosition.localPosition + Vector3.up * armMovementProgress;
+            if (armMovementSpeed > 0f && _currentHorizontalSpeed > 0f ||
+                armMovementSpeed < 0f && _currentHorizontalSpeed < 0f)
+            {
+                _currentHorizontalSpeed = 0f;
+            }
         }
     }
     
@@ -188,8 +240,9 @@ public class Player : MonoBehaviour
             _startJumpDelayWaited += Time.fixedDeltaTime;
         }
         if (_startJumpDelayWaited >= startJumpDelay) _startJump = false;
-        if (_isGrounded && wasntOnGround){
+        if (_isGrounded && wasntOnGround && hasRightLeg){
             audioSource.PlayOneShot(landingSound);
+            _cameraMover.ScreenShake(screenShakeDuration, landingScreenShake);
             Destroy(Instantiate(landingEffect, transform), 1);
         }
     }
@@ -200,5 +253,7 @@ public class Player : MonoBehaviour
         audioSource.PlayOneShot(detachSound);
         part.simulated = true;
         part.transform.parent = null;
+        part.velocity = Vector2.zero;
+        _cameraMover.ScreenShake(screenShakeDuration, detachScreenShake);
     }
 }
