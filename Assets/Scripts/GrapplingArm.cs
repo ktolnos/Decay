@@ -6,6 +6,7 @@ public class GrapplingArm: MonoBehaviour
     public Rigidbody2D rb;
     public float force;
     public State state = State.Idle;
+    public Vector3 attachedPosition;
 
     private void Start()
     {
@@ -15,8 +16,9 @@ public class GrapplingArm: MonoBehaviour
     public void Shoot()
     {
         rb.simulated = true;
+        rb.isKinematic = false;
         rb.velocity = Vector2.zero;
-        rb.AddForce(transform.forward * force, ForceMode2D.Impulse);
+        rb.AddForce(transform.up * force, ForceMode2D.Impulse);
         state = State.Flying;
     }
 
@@ -26,12 +28,24 @@ public class GrapplingArm: MonoBehaviour
         state = State.Idle;
     }
 
+    private void FixedUpdate()
+    {
+        if (state == State.Attached)
+        {
+            rb.velocity = Vector2.zero;
+            transform.position = attachedPosition;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (state == State.Flying && other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
+            rb.simulated = true;
             state = State.Attached;
+            attachedPosition = other.contacts[0].point;
+            transform.position = attachedPosition;
         }
     }
     

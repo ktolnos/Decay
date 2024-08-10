@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody2D _rb;
+    public Rigidbody2D rb;
     public float speed;
     public float jumpForce;
     private float _currentHorizontalSpeed;
@@ -15,10 +16,11 @@ public class Player : MonoBehaviour
     public float groundCheckLength;
     public float startJumpDelay = 0.2f;
     private float _startJumpDelayWaited;
+    public bool isGrappling;
     
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
     
     private void Update()
@@ -36,7 +38,10 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.velocity = new Vector2(_currentHorizontalSpeed, _rb.velocity.y);
+        if (!isGrappling)
+        {
+            rb.velocity = new Vector2(_currentHorizontalSpeed, rb.velocity.y);
+        }
         _isGrounded = false;
         foreach (var groundCheck in groundChecks)
         {
@@ -45,7 +50,7 @@ public class Player : MonoBehaviour
         }
         if (_isGrounded && _startJump)
         {
-            _rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             _startJump = false;
             _isGrounded = false;
         } else if (_startJump)

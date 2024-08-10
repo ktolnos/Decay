@@ -6,16 +6,24 @@ public class GrapplingBase: MonoBehaviour
     private LineRenderer _lineRenderer;
     public GrapplingArm arm;
     private float _armLength;
+    public float attractionSpeed = 1f;
+    private Player _player;
+    public float minDistance;
+    public float maxDistance;
+    public float maxTime = 1f;
+    private float _shotTime;
+    public Transform lineStart;
+    public Transform lineEnd;
 
     private void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _armLength = Vector2.Distance(arm.transform.position, transform.position);
+        _player = GetComponentInParent<Player>();
     }
 
-    public void Update()
+    public void Update()    
     {
-        _lineRenderer.SetPosition(1, transform.position - arm.transform.position);
         if (arm.state != GrapplingArm.State.Idle)
         {
             transform.up = arm.transform.position - transform.position;
@@ -32,14 +40,39 @@ public class GrapplingBase: MonoBehaviour
             arm.transform.position = transform.up * _armLength + transform.position;
         }
 
+        if (arm.state == GrapplingArm.State.Attached && Time.time - _shotTime > maxTime)
+        {
+            arm.Detach();
+        }
+        _player.isGrappling = arm.state == GrapplingArm.State.Attached;
+
         arm.transform.rotation = transform.rotation;
         
         if (Input.GetButtonDown("Fire1"))
         {
+            _shotTime = Time.time;
             arm.Shoot();
         }
+        _lineRenderer.SetPosition(0, lineStart.position);
+        _lineRenderer.SetPosition(1, lineEnd.position);
+    }
 
-        if (Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.LeftAlt))
+    private void FixedUpdate()
+    {
+        var distance = Vector2.Distance(arm.transform.position, transform.position);
+        if (arm.state == GrapplingArm.State.Attached)
+        {
+            if (distance < minDistance)
+            {
+                arm.Detach();
+            }
+            else
+            {
+                _player.rb.velocity = (arm.transform.position - transform.position) / distance * attractionSpeed;
+            }
+        }
+
+        if (distance > maxDistance)
         {
             arm.Detach();
         }
