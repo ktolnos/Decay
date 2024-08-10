@@ -8,9 +8,15 @@ public class GrapplingArm: MonoBehaviour
     public State state = State.Idle;
     public Vector3 attachedPosition;
 
+    public AudioClip hookAttachSound;
+    public AudioClip hookDetachSound;
+
+    private AudioSource audioSource;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Shoot()
@@ -20,12 +26,14 @@ public class GrapplingArm: MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(transform.up * force, ForceMode2D.Impulse);
         state = State.Flying;
+        audioSource.PlayOneShot(hookAttachSound);
     }
 
     public void Detach()
     {
         rb.simulated = false;
         state = State.Idle;
+        audioSource.PlayOneShot(hookDetachSound);
     }
 
     private void FixedUpdate()

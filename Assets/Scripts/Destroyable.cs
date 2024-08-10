@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Destroyable : MonoBehaviour
 {
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Damaging")){
             Destroy(gameObject);

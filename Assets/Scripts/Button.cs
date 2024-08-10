@@ -5,25 +5,25 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     public bool pressed;
-    public GameObject Door;
     public Sprite pressedButton;
     public Sprite unpressedButton;
     private SpriteRenderer spriteRenderer;
+    private float lastStay = 0;
 
     private void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
-    void OnCollisionStay(Collision other)
+    void OnTriggerStay2D(Collider2D other)
     {
         pressed = true;
         spriteRenderer.sprite = pressedButton;
-
+        lastStay = Time.time;
     }
-    void OnCollisionExit(Collision other)
+    void FixedUpdate()
     {
-        pressed = false;
-        spriteRenderer.sprite = unpressedButton;
+        if(Time.time - lastStay > Time.fixedDeltaTime*5){
+            pressed = false;
+            spriteRenderer.sprite = unpressedButton;
+        }
     }
-    
 }

@@ -37,12 +37,24 @@ public class Player : MonoBehaviour
     public Transform gliderCollider;
     public Transform collider2Legs;
     public Transform colliderNoLegs;
+    public AudioClip jumpSound;
+    public AudioClip landingSound;
+    public AudioClip detachSound;
+    public GameObject detachEffect;
+    public GameObject landingEffect;
+    public GameObject gliderEffect;
     
     private float _scaleMult = 1f;
+    private AudioSource audioSource;
+    private bool wasntOnGround;
+    private float defGravityScale;
     
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+        defGravityScale = rb.gravityScale;
+        gliderEffect.SetActive(false);
     }
     
     private void Update()
@@ -133,6 +145,7 @@ public class Player : MonoBehaviour
     private void DetachTorso()
     {
         hasTorso = false;
+        rb.AddForce(transform.up * torsoDetachForce * _scaleMult, ForceMode2D.Impulse);
         DetachLeftArm();
         DetachRightArm();
         DetachLeftLeg();
@@ -140,11 +153,20 @@ public class Player : MonoBehaviour
         DetachGlider();
         Detach(torso);
         colliderNoLegs.gameObject.SetActive(false);
-        rb.AddForce(transform.up * torsoDetachForce, ForceMode2D.Impulse);
     }
 
     private void FixedUpdate()
     {
+        wasntOnGround = !_isGrounded;
+        if(Input.GetKey(KeyCode.LeftShift)){
+            rb.gravityScale = 0;
+            rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+            gliderEffect.SetActive(true);
+        }else
+        {
+            rb.gravityScale = defGravityScale;
+            gliderEffect.SetActive(false);
+        }
         if (!isGrappling && (hasRightLeg || hasRightArm))
         {
             rb.velocity = new Vector2(_currentHorizontalSpeed, rb.velocity.y);
@@ -157,19 +179,25 @@ public class Player : MonoBehaviour
         }
         if (_isGrounded && _startJump)
         {
+            audioSource.PlayOneShot(jumpSound);
             var jumpForce = hasLeftLeg ? jumpForce2Legs : hasRightLeg ? jumpForce1Leg : jumpForceNoLegs;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             _startJump = false;
-            _isGrounded = false;
         } else if (_startJump)
         {
             _startJumpDelayWaited += Time.fixedDeltaTime;
         }
         if (_startJumpDelayWaited >= startJumpDelay) _startJump = false;
+        if (_isGrounded && wasntOnGround){
+            audioSource.PlayOneShot(landingSound);
+            Destroy(Instantiate(landingEffect, transform), 1);
+        }
     }
     
     private void Detach(Rigidbody2D part)
     {
+        Destroy(Instantiate(detachEffect, transform), 1);
+        audioSource.PlayOneShot(detachSound);
         part.simulated = true;
         part.transform.parent = null;
     }

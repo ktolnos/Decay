@@ -403,14 +403,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  speed: 10
-  jumpForce: 28
+  speed2Legs: 0
+  speed1Leg: 0
+  speedNoLegs: 0
+  jumpForce2Legs: 0
+  jumpForce1Leg: 0
+  jumpForceNoLegs: 0
+  torsoDetachForce: 0
   groundChecks:
   - {fileID: 1355713890}
   - {fileID: 2123468483}
   groundCheckLength: 0.2
   startJumpDelay: 0.2
   isGrappling: 0
+  hasLeftLeg: 1
+  hasRightLeg: 1
+  hasLeftArm: 1
+  hasRightArm: 1
+  hasGlider: 1
+  hasTorso: 1
+  leftLeg: {fileID: 0}
+  rightLeg: {fileID: 0}
+  leftArm: {fileID: 0}
+  rightArm: {fileID: 0}
+  torso: {fileID: 0}
+  glider: {fileID: 0}
+  gliderCollider: {fileID: 0}
+  collider2Legs: {fileID: 0}
+  colliderNoLegs: {fileID: 0}
 --- !u!1 &267255796
 GameObject:
   m_ObjectHideFlags: 0
