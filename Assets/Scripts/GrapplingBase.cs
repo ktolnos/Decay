@@ -24,6 +24,16 @@ public class GrapplingBase: MonoBehaviour
 
     public void Update()    
     {
+        if (!_player.hasLeftArm)
+        {
+            arm.rb.gravityScale = 1f;
+            arm.rb.simulated = true;
+            arm.rb.isKinematic = false;
+            arm.enabled = false;
+            _lineRenderer.SetPosition(0, lineStart.position);
+            _lineRenderer.SetPosition(1, lineEnd.position);
+            return;
+        }
         if (arm.state != GrapplingArm.State.Idle)
         {
             transform.up = arm.transform.position - transform.position;
