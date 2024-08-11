@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CameraMover : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     public float grapplingHookWeight = 0.5f;
+    public float fade_outDuration = 0.5f;
     private Vector3 newCameraPosition;
     private Vector3 coursorPosition;
+
+    private void Start() {
+        player = FindObjectOfType<Player>().gameObject;
+    }
+
     private void Update() {
         coursorPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         newCameraPosition = player.transform.position + coursorPosition*grapplingHookWeight;

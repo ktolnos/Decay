@@ -408,6 +408,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8274857356505624387, guid: e9e78c669a79acd419d3e2516cef3968, type: 3}
+      propertyPath: time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274857356505624387, guid: e9e78c669a79acd419d3e2516cef3968, type: 3}
+      propertyPath: winSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5acb1ea25a1c0874db32c4be3c5b7e98, type: 3}
+    - target: {fileID: 8274857356505624387, guid: e9e78c669a79acd419d3e2516cef3968, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 4838802404375198593}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -77837,6 +77849,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d2b1a943b5007541b481e6c9cfe6476, type: 3}
+--- !u!95 &4838802404375198593 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7274679215827101259, guid: 1d2b1a943b5007541b481e6c9cfe6476, type: 3}
+  m_PrefabInstance: {fileID: 4838802404375198592}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4910989706255259779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77946,6 +77963,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerRig
       objectReference: {fileID: 0}
+    - target: {fileID: 3273577735639324219, guid: 7f0585e0ba1d9f54cad9225e751dae03, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 4838802404375198593}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

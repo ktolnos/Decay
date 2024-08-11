@@ -2753,7 +2753,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978109328414865357}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e00bd665a956ba244bd5bd686bb22e64, type: 3}
   m_Name: 
@@ -2794,7 +2794,8 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 5222f56fb00de52449ea238ca7dd015a, type: 3}
   landingSound: {fileID: 8300000, guid: 21d6457dac24897499f43093725abe17, type: 3}
   detachSound: {fileID: 8300000, guid: 5ee443ccff2c4504c818649451dc4f6d, type: 3}
-  walking: {fileID: 0}
+  walkingSound: {fileID: 0}
+  crawlingSound: {fileID: 0}
   detachEffect: {fileID: 2826233840063171768, guid: 0d0951aff7b447149af62718c3f9137f, type: 3}
   landingEffect: {fileID: 2826233840063171768, guid: b29971674590bc84b91b4ae00b3041fb, type: 3}
   gliderEffect: {fileID: 4426288638853871859}
@@ -3278,11 +3279,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978109328414865357}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1e254d5f4c44957895ab7788f5b3154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  looseSound: {fileID: 0}
+  effect: {fileID: 0}
+  time: 0
+  transition: {fileID: 0}
 --- !u!114 &3341119000633841764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3297,6 +3302,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transformStrength: 0.04
   scaleStrength: 0
+  rotationStrength: 0
+  breathingSpeed: 5
 --- !u!82 &3352361538599529475
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9584,6 +9591,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transformStrength: -0.03
   scaleStrength: 0
+  rotationStrength: 0
+  breathingSpeed: 5
 --- !u!114 &7666267484305832268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9598,6 +9607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transformStrength: 0.02
   scaleStrength: 0.005
+  rotationStrength: 0
+  breathingSpeed: 5
 --- !u!50 &7780109086355492061
 Rigidbody2D:
   serializedVersion: 4
@@ -10120,6 +10131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transformStrength: 0.005
   scaleStrength: 0
+  rotationStrength: 0
+  breathingSpeed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

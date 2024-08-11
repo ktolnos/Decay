@@ -573,6 +573,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e254d5f4c44957895ab7788f5b3154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  looseSound: {fileID: 8300000, guid: 3e26c51c93b915b469cc90149e2af7d4, type: 3}
+  effect: {fileID: 2826233840063171768, guid: 9f562c71f0ff8574683da09efcd41e41, type: 3}
+  time: 0.5
+  transition: {fileID: 7274679215827101259, guid: 1d2b1a943b5007541b481e6c9cfe6476, type: 3}
 --- !u!1 &1146037178914649873
 GameObject:
   m_ObjectHideFlags: 0
