@@ -1005,7 +1005,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1181231902549445274}
   - component: {fileID: 5855137816205633861}
-  - component: {fileID: 6455264676026544631}
+  - component: {fileID: 7496522555899958215}
   m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
@@ -1080,13 +1080,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!136 &6455264676026544631
-CapsuleCollider:
+--- !u!70 &7496522555899958215
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728610470497661477}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1095,14 +1097,24 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1875
-  m_Height: 0.75
-  m_Direction: 1
-  m_Center: {x: 0.01, y: 0, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.01, y: 0}
+  m_Size: {x: 0.375, y: 0.75}
+  m_Direction: 0
 --- !u!1 &1742231260002548295
 GameObject:
   m_ObjectHideFlags: 0
