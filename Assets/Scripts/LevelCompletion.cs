@@ -10,6 +10,7 @@ public class LevelCompletion: MonoBehaviour
     private Animator transition;
     private AudioSource audioSource;
     private bool startedLoading = false;
+    private Player _player;
 
     void Start()
     {
@@ -21,13 +22,22 @@ public class LevelCompletion: MonoBehaviour
         if (startedLoading){
             return;
         }
-        
-        if (other.gameObject.GetComponentInParent<Player>() != null)
+
+        _player = other.gameObject.GetComponentInParent<Player>();
+        if (_player != null)
         {
             startedLoading = true;
             transition.SetTrigger("End");
             audioSource.PlayOneShot(winSound);
             StartCoroutine(LoadNextLevel(time));
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (startedLoading)
+        {
+            _player.rb.AddForce((transform.position - _player.transform.position)*200f, ForceMode2D.Force);
         }
     }
 
