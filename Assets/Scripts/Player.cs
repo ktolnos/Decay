@@ -157,6 +157,11 @@ public class Player : MonoBehaviour
             mousePosition.z = 0;
             head.transform.right = mousePosition - head.transform.position;
         }
+
+        if (!hasTorso)
+        {
+            rb.freezeRotation = false;
+        }
     }
 
     private void DetachLeg()
