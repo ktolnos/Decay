@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     public AnimationCurve detachScreenShake;
     public float screenShakeDuration = 0.2f;
     private CameraMover _cameraMover;
-    
+    private bool _usedGlider;
     
     private void Start()
     {
@@ -143,8 +143,8 @@ public class Player : MonoBehaviour
                 armMovementProgress = Mathf.Clamp(armMovementProgress, -armMovementDistance, armMovementDistance);
             }
             rightArm.transform.localPosition = rightArmLayPosition.localPosition + Vector3.up * armMovementProgress;
-            if (armMovementSpeed > 0f && _currentHorizontalSpeed > 0f ||
-                armMovementSpeed < 0f && _currentHorizontalSpeed < 0f)
+            if (_isGrounded && (armMovementSpeed > 0f && _currentHorizontalSpeed > 0f ||
+                armMovementSpeed < 0f && _currentHorizontalSpeed < 0f))
             {
                 _currentHorizontalSpeed = 0f;
             }
@@ -273,15 +273,15 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, 0, 0);
             gliderEffect.SetActive(true);
             gliderEffect.transform.up = Vector3.up;
+            _usedGlider = true;
         }else
         {
             rb.gravityScale = defGravityScale;
             gliderEffect.SetActive(false);
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            DetachGlider();
+            if (_usedGlider)
+            {
+                DetachGlider();
+            }
         }
         if (!isGrappling && (hasRightLeg || hasRightArm))
         {
