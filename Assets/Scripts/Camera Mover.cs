@@ -12,6 +12,7 @@ public class CameraMover : MonoBehaviour
     private void Update() {
         coursorPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         newCameraPosition = player.transform.position + coursorPosition*grapplingHookWeight;
+        newCameraPosition.y = Mathf.Max(0f, newCameraPosition.y);
         transform.position = new Vector3(newCameraPosition.x, newCameraPosition.y, transform.position.z);
     }
 
