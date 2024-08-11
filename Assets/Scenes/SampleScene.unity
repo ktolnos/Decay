@@ -1047,18 +1047,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2242132273515698345, guid: 7f0585e0ba1d9f54cad9225e751dae03, type: 3}
-      propertyPath: jumpForce1Leg
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242132273515698345, guid: 7f0585e0ba1d9f54cad9225e751dae03, type: 3}
-      propertyPath: jumpForce2Legs
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242132273515698345, guid: 7f0585e0ba1d9f54cad9225e751dae03, type: 3}
-      propertyPath: jumpForceNoLegs
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 2645044096763711532, guid: 7f0585e0ba1d9f54cad9225e751dae03, type: 3}
       propertyPath: m_Name
       value: PlayerRig

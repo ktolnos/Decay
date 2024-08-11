@@ -412,9 +412,9 @@ MonoBehaviour:
   speedGlider: 10
   speed1Leg: 7
   speedNoLegs: 4
-  jumpForce2Legs: 27
-  jumpForce1Leg: 15
-  jumpForceNoLegs: 15
+  jumpForce2Legs: 32
+  jumpForce1Leg: 20
+  jumpForceNoLegs: 20
   torsoDetachForce: 30
   groundChecks:
   - {fileID: 8784426759480597179}
