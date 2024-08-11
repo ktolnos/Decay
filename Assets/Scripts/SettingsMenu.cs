@@ -9,6 +9,14 @@ public class SettingsMenu : MonoBehaviour
     public Slider musicSlider;
     public Slider SFXSlider;
 
+
+    void Start()
+    {
+        masterVolumeSlider.value = PlayerPrefs.GetFloat("masterVolume", 0);
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 0);
+        SFXSlider.value = PlayerPrefs.GetFloat("SFXolume", 0);
+    }
+
     public void SetMasterVolume(){
         PlayerPrefs.SetFloat("masterVolume" , masterVolumeSlider.value);
     }

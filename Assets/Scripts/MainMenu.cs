@@ -11,4 +11,8 @@ public class MainMenu : MonoBehaviour
     public void QuitGame(){
         Application.Quit();
     }
+    public void LoadLevel(int level){
+        Time.timeScale = 1;
+        SceneManager.LoadScene(level);
+    }
 }
