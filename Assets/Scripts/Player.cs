@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip landingSound;
     public AudioClip detachSound;
+    public AudioClip walkingSound;
+    public AudioClip crawlingSound;
     public GameObject detachEffect;
     public GameObject landingEffect;
     public GameObject gliderEffect;
@@ -72,6 +74,9 @@ public class Player : MonoBehaviour
     
     private void Update()
     {
+        if(Time.timeScale == 0){
+            return;
+        }
         var horizontalInput = Input.GetAxis("Horizontal");
         if (hasTorso)
         {
@@ -125,6 +130,7 @@ public class Player : MonoBehaviour
             if (rightLegZ > legMovementMinMax.y || rightLegZ < legMovementMinMax.x)
             {
                 rightLegMovementDir *= -1;
+                audioSource.PlayOneShot(walkingSound);
                 rightLegZ = Mathf.Clamp(rightLegZ, legMovementMinMax.x, legMovementMinMax.y);
             }
             rightLeg.transform.eulerAngles = new Vector3(0f, 0f, rightLegZ);
@@ -140,6 +146,7 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(armMovementProgress) >= armMovementDistance)
             {
                 armMovementSpeed *= -1;
+                audioSource.PlayOneShot(crawlingSound);
                 armMovementProgress = Mathf.Clamp(armMovementProgress, -armMovementDistance, armMovementDistance);
             }
             rightArm.transform.localPosition = rightArmLayPosition.localPosition + Vector3.up * armMovementProgress;
@@ -267,6 +274,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if( Time.timeScale == 0){
+            return;
+        }
         wasntOnGround = !_isGrounded;
 
         var usesGlider = hasGlider && Input.GetKey(KeyCode.LeftShift);
