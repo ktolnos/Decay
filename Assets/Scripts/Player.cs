@@ -262,17 +262,23 @@ public class Player : MonoBehaviour
         direction.z = 0;
         direction -= head.transform.position;
         direction.Normalize();
-        rb.AddForce(direction * torsoDetachForce * _scaleMult, ForceMode2D.Impulse);
+        rb.AddForce(direction * torsoDetachForce, ForceMode2D.Impulse);
     }
 
     private void FixedUpdate()
     {
         wasntOnGround = !_isGrounded;
-        if(hasGlider && Input.GetKey(KeyCode.LeftShift)){
+
+        var usesGlider = hasGlider && Input.GetKey(KeyCode.LeftShift);
+        if(usesGlider){
             rb.gravityScale = 0;
             rb.velocity = new Vector3(rb.velocity.x, 0, 0);
             gliderEffect.SetActive(true);
             gliderEffect.transform.up = Vector3.up;
+            if (!_usedGlider)
+            {
+                transform.position += Vector3.up * 0.1f;
+            }
             _usedGlider = true;
         }else
         {
@@ -283,7 +289,7 @@ public class Player : MonoBehaviour
                 DetachGlider();
             }
         }
-        if (!isGrappling && (hasRightLeg || hasRightArm))
+        if (!isGrappling && (hasRightLeg || hasRightArm) || usesGlider)
         {
             rb.velocity = new Vector2(_currentHorizontalSpeed, rb.velocity.y);
         }

@@ -63,7 +63,15 @@ public class GrapplingArm: MonoBehaviour
             transform.position = attachedPosition;
         }
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Damaging"))
+        {
+            Detach();
+        }
+    }
+
     public enum State
     {
         Attached,
