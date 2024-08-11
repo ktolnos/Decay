@@ -45,6 +45,9 @@ public class GrapplingArm: MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(Time.timeScale == 0){
+            return;
+        }
         if (state == State.Attached)
         {
             rb.velocity = Vector2.zero;

@@ -27,6 +27,9 @@ public class GrapplingBase: MonoBehaviour
 
     public void Update()    
     {
+        if(Time.timeScale == 0){
+            return;
+        }
         if (!_player.hasLeftArm)
         {
             arm.rb.gravityScale = 1f;
@@ -79,6 +82,9 @@ public class GrapplingBase: MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(Time.timeScale == 0){
+            return;
+        }
         if (!_player.hasLeftArm)
         {
             return;

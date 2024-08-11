@@ -404,6 +404,8 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 5222f56fb00de52449ea238ca7dd015a, type: 3}
   landingSound: {fileID: 8300000, guid: 21d6457dac24897499f43093725abe17, type: 3}
   detachSound: {fileID: 8300000, guid: 5ee443ccff2c4504c818649451dc4f6d, type: 3}
+  walkingSound: {fileID: 8300000, guid: 7dea947e5afbb164da989b5bc44131e8, type: 3}
+  crawlingSound: {fileID: 8300000, guid: 7e2427ef0d9bf50418b9ef5925d2fc6c, type: 3}
   detachEffect: {fileID: 2826233840063171768, guid: 0d0951aff7b447149af62718c3f9137f, type: 3}
   landingEffect: {fileID: 2826233840063171768, guid: b29971674590bc84b91b4ae00b3041fb, type: 3}
   gliderEffect: {fileID: 4426288639555737296}
@@ -472,7 +474,7 @@ AudioSource:
   m_GameObject: {fileID: 978109327439272430}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8900936355112326077, guid: 50b8e642bb6be794990c127dd924b5fc, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1710,7 +1712,7 @@ AudioSource:
   m_GameObject: {fileID: 3020168955201077615}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8900936355112326077, guid: 50b8e642bb6be794990c127dd924b5fc, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
