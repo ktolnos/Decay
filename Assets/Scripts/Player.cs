@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float speed2Legs;
+    public float speedGlider;
     public float speed1Leg;
     public float speedNoLegs;
     public float jumpForce2Legs;
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
     public bool hasRightArm = true;
     public bool hasGlider = true;
     public bool hasTorso = true;
+    public Rigidbody2D head;
     public Rigidbody2D leftLeg;
     public Rigidbody2D rightLeg;
     public Rigidbody2D leftArm;
@@ -78,7 +81,7 @@ public class Player : MonoBehaviour
         var speed = hasLeftLeg ? speed2Legs : hasRightLeg ? speed1Leg : hasRightArm ? speedNoLegs : 0f;
         _currentHorizontalSpeed = horizontalInput * speed;
         
-        if ( Input.GetButtonDown("Jump"))
+        if ( Input.GetButtonDown("Jump") && (hasRightLeg || hasRightArm))
         {
             _startJump = true;
             _startJumpDelayWaited = 0;
@@ -99,10 +102,12 @@ public class Player : MonoBehaviour
             DetachGlider();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4) && hasTorso)
+        if ((Input.GetKeyDown(KeyCode.Alpha4) || Input.GetButtonDown("Fire1") && !hasLeftArm) && hasTorso)
         {
-            DetachTorso();
+            StartCoroutine(DetachTorso());
         }
+        
+        var isGliding = hasGlider && Input.GetKey(KeyCode.LeftShift);
 
         if (hasRightLeg)
         {
@@ -128,7 +133,7 @@ public class Player : MonoBehaviour
                 leftLeg.transform.eulerAngles = new Vector3(0f, 0f, -rightLegZ);
             }
         }
-        else if (hasRightArm)
+        else if (hasRightArm && !isGliding)
         {
             rightArm.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
             armMovementProgress += _currentHorizontalSpeed * armMovementSpeed * Time.deltaTime;
@@ -143,6 +148,14 @@ public class Player : MonoBehaviour
             {
                 _currentHorizontalSpeed = 0f;
             }
+        }
+        _currentHorizontalSpeed = isGliding ? speedGlider * horizontalInput : _currentHorizontalSpeed;
+
+        if (!hasLeftArm && hasTorso)
+        {
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            head.transform.right = mousePosition - head.transform.position;
         }
     }
 
@@ -199,22 +212,52 @@ public class Player : MonoBehaviour
     
     private void DetachGlider()
     {
+        if (!hasGlider)
+        {
+            return;
+        }
         hasGlider = false;
         Detach(glider);
         gliderCollider.gameObject.SetActive(false);
     }
     
-    private void DetachTorso()
+    private IEnumerator DetachTorso()
     {
+        
+        if (hasLeftArm)
+        {
+            DetachLeftArm();
+            yield return 0;
+        }
+        if (hasRightArm)
+        {
+            DetachRightArm();
+            yield return 0;
+        }
+        if (hasLeftLeg)
+        {
+            DetachLeftLeg();
+            yield return 0;
+        }
+        if (hasRightLeg)
+        {
+            DetachRightLeg();
+            yield return 0;
+        }
+        if (hasGlider)
+        {
+            DetachGlider();
+            yield return 0;
+        }
+        
         hasTorso = false;
-        rb.AddForce(transform.up * torsoDetachForce * _scaleMult, ForceMode2D.Impulse);
-        DetachLeftArm();
-        DetachRightArm();
-        DetachLeftLeg();
-        DetachRightLeg();
-        DetachGlider();
         Detach(torso);
         colliderNoLegs.gameObject.SetActive(false);
+        var direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction.z = 0;
+        direction -= head.transform.position;
+        direction.Normalize();
+        rb.AddForce(direction * torsoDetachForce * _scaleMult, ForceMode2D.Impulse);
     }
 
     private void FixedUpdate()
@@ -224,6 +267,7 @@ public class Player : MonoBehaviour
             rb.gravityScale = 0;
             rb.velocity = new Vector3(rb.velocity.x, 0, 0);
             gliderEffect.SetActive(true);
+            gliderEffect.transform.up = Vector3.up;
         }else
         {
             rb.gravityScale = defGravityScale;
@@ -248,15 +292,23 @@ public class Player : MonoBehaviour
         {
             audioSource.PlayOneShot(jumpSound);
             var jumpForce = hasLeftLeg ? jumpForce2Legs : hasRightLeg ? jumpForce1Leg : jumpForceNoLegs;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            var direction = hasRightLeg ? Vector3.up : transform.up * _scaleMult + Vector3.up;
+            if (!hasRightLeg)
+            {
+                DetachRightArm();
+            }
+            else
+            {
+                DetachLeg();
+            }
+            rb.AddForce(direction * jumpForce, ForceMode2D.Impulse);
             _startJump = false;
-            DetachLeg();
         } else if (_startJump)
         {
             _startJumpDelayWaited += Time.fixedDeltaTime;
         }
         if (_startJumpDelayWaited >= startJumpDelay) _startJump = false;
-        if (_isGrounded && wasntOnGround && hasRightLeg){
+        if (_isGrounded && wasntOnGround){
             audioSource.PlayOneShot(landingSound);
             _cameraMover.ScreenShake(screenShakeDuration, landingScreenShake);
             Destroy(Instantiate(landingEffect, transform), 1);

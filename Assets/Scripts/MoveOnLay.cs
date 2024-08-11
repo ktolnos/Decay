@@ -14,6 +14,11 @@ public class MoveOnLay: MonoBehaviour
 
     public void Update()
     {
+        if (!_player.hasLeftArm)
+        {
+            enabled = false;
+            return;
+        }
         if (!_moved && !_player.hasRightLeg)
         {
             transform.localPosition = target.localPosition;

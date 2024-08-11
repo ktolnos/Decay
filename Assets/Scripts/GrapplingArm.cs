@@ -21,6 +21,10 @@ public class GrapplingArm: MonoBehaviour
 
     public void Shoot()
     {
+        if (state != State.Idle)
+        {
+            return;
+        }
         rb.simulated = true;
         rb.isKinematic = false;
         rb.velocity = Vector2.zero;
@@ -31,9 +35,12 @@ public class GrapplingArm: MonoBehaviour
 
     public void Detach()
     {
+        if (state == State.Attached)
+        {
+            audioSource.PlayOneShot(hookDetachSound);
+        }
         rb.simulated = false;
         state = State.Idle;
-        audioSource.PlayOneShot(hookDetachSound);
     }
 
     private void FixedUpdate()

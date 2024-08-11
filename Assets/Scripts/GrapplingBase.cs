@@ -14,12 +14,15 @@ public class GrapplingBase: MonoBehaviour
     private float _shotTime;
     public Transform lineStart;
     public Transform lineEnd;
+    public bool detachAfterUse = true;
+    private Rigidbody2D _rb;
 
     private void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _armLength = Vector2.Distance(arm.transform.position, transform.position);
         _player = GetComponentInParent<Player>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     public void Update()    
@@ -30,6 +33,9 @@ public class GrapplingBase: MonoBehaviour
             arm.rb.simulated = true;
             arm.rb.isKinematic = false;
             arm.enabled = false;
+            arm.rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            _rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            
             _lineRenderer.SetPosition(0, lineStart.position);
             _lineRenderer.SetPosition(1, lineEnd.position);
             return;
@@ -48,7 +54,7 @@ public class GrapplingBase: MonoBehaviour
         if (arm.state == GrapplingArm.State.Idle)
         {
             arm.transform.position = transform.up * _armLength + transform.position;
-            if (_shotTime != 0f)
+            if (detachAfterUse && _shotTime != 0f)
             {
                 _player.DetachLeftArm();
             }
@@ -73,6 +79,10 @@ public class GrapplingBase: MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!_player.hasLeftArm)
+        {
+            return;
+        }
         var distance = Vector2.Distance(arm.transform.position, transform.position);
         if (arm.state == GrapplingArm.State.Attached)
         {
