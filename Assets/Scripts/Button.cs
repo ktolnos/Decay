@@ -16,6 +16,7 @@ public class Button : MonoBehaviour
 
     private void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        light2D = GetComponent<Light2D>();
     }
     void OnTriggerStay2D(Collider2D other)
     {
