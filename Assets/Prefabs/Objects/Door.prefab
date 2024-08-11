@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 0}
-  doorSpeed: 1
+  doorSpeed: 4
 --- !u!61 &7160624334312597198
 BoxCollider2D:
   m_ObjectHideFlags: 0

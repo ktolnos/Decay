@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6474846818773875816}
   - component: {fileID: 8274857356505624387}
   - component: {fileID: 626134954702147370}
+  - component: {fileID: 2333183600087480092}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -197,7 +198,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winSound: {fileID: 8300000, guid: 5acb1ea25a1c0874db32c4be3c5b7e98, type: 3}
   time: 1
-  transition: {fileID: 7274679215827101259, guid: 1d2b1a943b5007541b481e6c9cfe6476, type: 3}
 --- !u!82 &626134954702147370
 AudioSource:
   m_ObjectHideFlags: 0
@@ -294,6 +294,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2333183600087480092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2619654805562954886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b92a66cfc74d14d91ef176a7ef5b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformStrength: 0.1
+  scaleStrength: 0.1
+  rotationStrength: 0
+  breathingSpeed: 5
 --- !u!1 &7778406517938940756
 GameObject:
   m_ObjectHideFlags: 0

@@ -97,7 +97,6 @@ public class GrapplingBase: MonoBehaviour
             if (distance < minDistance)
             {
                 arm.Detach();
-                Debug.Log("Detach by min distance");
             }
             else
             {
