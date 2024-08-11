@@ -108,7 +108,6 @@ public class GrapplingBase: MonoBehaviour
         if (distance > maxDistance && !_wasAttached)
         {
             arm.Detach();
-            Debug.Log("Detach by max distance");
         }
     }
 }
