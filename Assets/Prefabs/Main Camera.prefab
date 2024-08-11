@@ -63,7 +63,6 @@ GameObject:
   - component: {fileID: 6826955417101882935}
   - component: {fileID: 4738595219584449046}
   - component: {fileID: 5620956479433068197}
-  - component: {fileID: 5642372893100878574}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -219,21 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aded5798b7da92439b0e3d42aae0ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
-  audioMixer: {fileID: 24100000, guid: 50b8e642bb6be794990c127dd924b5fc, type: 2}
---- !u!114 &5642372893100878574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6098589725646604722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aded5798b7da92439b0e3d42aae0ce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 8938329247568784603}
+  pauseMenu: {fileID: 5544868332436575931}
   audioMixer: {fileID: 24100000, guid: 50b8e642bb6be794990c127dd924b5fc, type: 2}
 --- !u!1 &6546194464390424052
 GameObject:
@@ -545,8 +530,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1606474209325544013, guid: f77034fcede372d4baf99ccf4dfb0c85, type: 3}
   m_PrefabInstance: {fileID: 4565383849110575158}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8938329247568784603 stripped
+--- !u!1 &5544868332436575931 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4850609328129373421, guid: f77034fcede372d4baf99ccf4dfb0c85, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8334144425097383565, guid: f77034fcede372d4baf99ccf4dfb0c85, type: 3}
   m_PrefabInstance: {fileID: 4565383849110575158}
   m_PrefabAsset: {fileID: 0}

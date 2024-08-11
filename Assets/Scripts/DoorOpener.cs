@@ -7,7 +7,6 @@ public class DoorOpener : MonoBehaviour
     public GameObject Button;
     public float doorSpeed = 1;
     private Button bt;
-    private bool isMoving;
     private Vector3 openedPosition;
     private Vector3 closedPosition;
     private Vector3 tgPosition;
@@ -19,23 +18,18 @@ public class DoorOpener : MonoBehaviour
         openedPosition = transform.position + Vector3.up*3;
     }
     void Update(){
-        if(bt.pressed && !isMoving){
-            isMoving = true;
+        if(bt.pressed){
             tgPosition = openedPosition;
         }
-        else if(!bt.pressed && !isMoving){
-            isMoving = true;
+        else if(!bt.pressed){
             tgPosition = closedPosition;
         }
     }
     void FixedUpdate()
     {
-        if(isMoving){
-            if((tgPosition - transform.position).magnitude < Time.fixedDeltaTime * doorSpeed){
-                isMoving = false;
-                transform.position = tgPosition;
-            }
-            transform.position = (tgPosition - transform.position).normalized * doorSpeed * Time.fixedDeltaTime;
+        if((tgPosition - transform.position).magnitude < Time.fixedDeltaTime * doorSpeed){
+            transform.position = tgPosition;
         }
+        transform.position += (tgPosition - transform.position).normalized * doorSpeed * Time.fixedDeltaTime;
     }
 }
