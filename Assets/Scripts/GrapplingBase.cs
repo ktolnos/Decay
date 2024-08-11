@@ -48,6 +48,10 @@ public class GrapplingBase: MonoBehaviour
         if (arm.state == GrapplingArm.State.Idle)
         {
             arm.transform.position = transform.up * _armLength + transform.position;
+            if (_shotTime != 0f)
+            {
+                _player.DetachLeftArm();
+            }
         }
 
         if (arm.state == GrapplingArm.State.Attached && Time.time - _shotTime > maxTime)

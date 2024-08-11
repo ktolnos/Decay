@@ -86,26 +86,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (hasLeftLeg)
-            {
-                DetachLeftLeg();
-            }
-            else if (hasRightLeg)
-            {
-                DetachRightLeg();
-            }
+            DetachLeg();
         }
         
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (hasLeftArm)
-            {
-                DetachLeftArm();
-            }
-            else if (hasRightArm)
-            {
-                DetachRightArm();
-            }
+            DetachArm();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3) && hasGlider)
@@ -159,8 +145,32 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    private void DetachLeg()
+    {
+        if (hasLeftLeg)
+        {
+            DetachLeftLeg();
+        }
+        else if (hasRightLeg)
+        {
+            DetachRightLeg();
+        }
+    }
     
-    private void DetachLeftArm()
+    private void DetachArm()
+    {
+        if (hasLeftArm)
+        {
+            DetachLeftArm();
+        }
+        else if (hasRightArm)
+        {
+            DetachRightArm();
+        }
+    }
+    
+    public void DetachLeftArm()
     {
         hasLeftArm = false;
         Detach(leftArm);
@@ -219,6 +229,11 @@ public class Player : MonoBehaviour
             rb.gravityScale = defGravityScale;
             gliderEffect.SetActive(false);
         }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            DetachGlider();
+        }
         if (!isGrappling && (hasRightLeg || hasRightArm))
         {
             rb.velocity = new Vector2(_currentHorizontalSpeed, rb.velocity.y);
@@ -235,6 +250,7 @@ public class Player : MonoBehaviour
             var jumpForce = hasLeftLeg ? jumpForce2Legs : hasRightLeg ? jumpForce1Leg : jumpForceNoLegs;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             _startJump = false;
+            DetachLeg();
         } else if (_startJump)
         {
             _startJumpDelayWaited += Time.fixedDeltaTime;
