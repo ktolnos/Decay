@@ -20666,11 +20666,6 @@ PrefabInstance:
       addedObject: {fileID: 508290862}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ab332cec35abf4fb8240b30a86b005, type: 3}
---- !u!1 &860525481070418193 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 978109327439272430, guid: 7f0585e0ba1d9f54cad9225e751dae03, type: 3}
-  m_PrefabInstance: {fileID: 5857797792199279764}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4838802404375198592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20719,10 +20714,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4738595219584449046, guid: 1d2b1a943b5007541b481e6c9cfe6476, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 860525481070418193}
     - target: {fileID: 6098589725646604722, guid: 1d2b1a943b5007541b481e6c9cfe6476, type: 3}
       propertyPath: m_Name
       value: Main Camera
