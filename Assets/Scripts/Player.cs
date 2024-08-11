@@ -263,7 +263,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         wasntOnGround = !_isGrounded;
-        if(Input.GetKey(KeyCode.LeftShift)){
+        if(hasGlider && Input.GetKey(KeyCode.LeftShift)){
             rb.gravityScale = 0;
             rb.velocity = new Vector3(rb.velocity.x, 0, 0);
             gliderEffect.SetActive(true);
