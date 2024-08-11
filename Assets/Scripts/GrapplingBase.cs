@@ -15,26 +15,23 @@ public class GrapplingBase: MonoBehaviour
     public Transform lineStart;
     public Transform lineEnd;
     public bool detachAfterUse = true;
-    private Rigidbody2D _rb;
+    private bool _wasAttached;
 
     private void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _armLength = Vector2.Distance(arm.transform.position, transform.position);
         _player = GetComponentInParent<Player>();
-        _rb = GetComponent<Rigidbody2D>();
     }
 
     public void Update()    
     {
         if (!_player.hasLeftArm)
         {
-            arm.rb.gravityScale = 1f;
+            arm.rb.gravityScale = 10f;
             arm.rb.simulated = true;
             arm.rb.isKinematic = false;
             arm.enabled = false;
-            arm.rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-            _rb.constraints = RigidbodyConstraints2D.FreezePositionX;
             
             _lineRenderer.SetPosition(0, lineStart.position);
             _lineRenderer.SetPosition(1, lineEnd.position);
@@ -54,15 +51,20 @@ public class GrapplingBase: MonoBehaviour
         if (arm.state == GrapplingArm.State.Idle)
         {
             arm.transform.position = transform.up * _armLength + transform.position;
-            if (detachAfterUse && _shotTime != 0f)
+            if (detachAfterUse && _wasAttached)
             {
                 _player.DetachLeftArm();
             }
         }
 
-        if (arm.state == GrapplingArm.State.Attached && Time.time - _shotTime > maxTime)
+        if (arm.state == GrapplingArm.State.Attached)
         {
-            arm.Detach();
+            _wasAttached = true;
+            if (Time.time - _shotTime > maxTime)
+            {
+                arm.Detach();
+                Debug.Log("Detach by time");
+            }
         }
         _player.isGrappling = arm.state == GrapplingArm.State.Attached;
 
@@ -89,6 +91,7 @@ public class GrapplingBase: MonoBehaviour
             if (distance < minDistance)
             {
                 arm.Detach();
+                Debug.Log("Detach by min distance");
             }
             else
             {
@@ -96,9 +99,10 @@ public class GrapplingBase: MonoBehaviour
             }
         }
 
-        if (distance > maxDistance)
+        if (distance > maxDistance && !_wasAttached)
         {
             arm.Detach();
+            Debug.Log("Detach by max distance");
         }
     }
 }

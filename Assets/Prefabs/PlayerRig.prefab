@@ -374,7 +374,7 @@ MonoBehaviour:
   speed1Leg: 7
   speedNoLegs: 7
   jumpForce2Legs: 32
-  jumpForce1Leg: 23
+  jumpForce1Leg: 24
   jumpForceNoLegs: 20
   torsoDetachForce: 30
   groundChecks:
@@ -1926,8 +1926,8 @@ MonoBehaviour:
   arm: {fileID: 2870570593984125459}
   attractionSpeed: 25
   minDistance: 3
-  maxDistance: 30
-  maxTime: 1.5
+  maxDistance: 12
+  maxTime: 2
   lineStart: {fileID: 4734248994089274659}
   lineEnd: {fileID: 2082866641257175139}
   detachAfterUse: 1
