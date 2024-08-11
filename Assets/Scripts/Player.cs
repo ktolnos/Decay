@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
         {
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
-            head.transform.right = mousePosition - head.transform.position;
+            head.transform.right = _scaleMult * (mousePosition - head.transform.position);
         }
 
         if (!hasTorso)
