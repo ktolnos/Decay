@@ -35,8 +35,16 @@ public class SettingsController : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
-            Time.timeScale = 0;
-            pauseMenu.SetActive(true);
+            if (Time.timeScale == 0f)
+            {
+                Time.timeScale = 1;
+                pauseMenu.SetActive(false); 
+            }
+            else
+            {
+                Time.timeScale = 0;
+                pauseMenu.SetActive(true);
+            }
         }
         audioMixer.SetFloat("Master", PlayerPrefs.GetFloat("masterVolume"));
         audioMixer.SetFloat("Music", PlayerPrefs.GetFloat("musicVolume"));
