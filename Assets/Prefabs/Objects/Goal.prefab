@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798a975924a34dfba3d41564d94870da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winSound: {fileID: 8300000, guid: 8691ffda6e0650948aa6b7034c8c403c, type: 3}
+  winSound: {fileID: 8300000, guid: b9ddb306d29a29440ab67c80fa3c2890, type: 3}
   time: 1
 --- !u!82 &626134954702147370
 AudioSource:

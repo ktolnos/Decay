@@ -28,7 +28,7 @@ public class LevelCompletion: MonoBehaviour
         {
             startedLoading = true;
             transition.SetTrigger("End");
-            audioSource.PlayOneShot(winSound);
+            audioSource.PlayOneShot(winSound, volumeScale:2f);
             StartCoroutine(LoadNextLevel(time));
         }
     }
