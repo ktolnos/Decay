@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: PerdTat
-  productName: PeiceByPiece
+  productName: PieceByPiece
   defaultCursor: {fileID: 2800000, guid: fd619aff11f0e834caf90d6cd38a1425, type: 3}
   cursorHotspot: {x: 15, y: 17}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
