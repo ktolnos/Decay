@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         {
             rightArm.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180));
             armMovementProgress += _currentHorizontalSpeed * armMovementSpeed * Time.deltaTime;
-            if (Mathf.Abs(armMovementProgress) >= armMovementDistance)
+            if (Mathf.Abs(armMovementProgress) > armMovementDistance)
             {
                 armMovementSpeed *= -1;
                 audioSource.PlayOneShot(crawlingSound);
