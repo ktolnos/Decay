@@ -21,9 +21,9 @@ public class GameOver: MonoBehaviour
         if(StartedReloading){
             return;
         }
-        StartedReloading = true;
-        transition.SetTrigger("End");
         if(other.gameObject.layer == LayerMask.NameToLayer("Damaging")){
+            StartedReloading = true;
+            transition.SetTrigger("End");
             Destroy(Instantiate(effect, transform),1);
             audioSource.PlayOneShot(looseSound);
             StartCoroutine(ReloadLevel(time));
