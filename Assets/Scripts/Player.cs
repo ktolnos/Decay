@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         if(Time.timeScale == 0){
             return;
         }
-        var horizontalInput = Input.GetAxis("Horizontal");
+        var horizontalInput = Input.GetAxisRaw("Horizontal");
         if (hasTorso)
         {
             _scaleMult = horizontalInput > 0 ? 1 : horizontalInput < 0 ? -1 : _scaleMult;
